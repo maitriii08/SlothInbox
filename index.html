@@ -1,647 +1,630 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="color-scheme" content="dark">
-    <meta name="theme-color" content="#030712">
-    <title>SlothInbox Pro 🦥 | High-End Local AI Clutter Matrix</title>
-    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <meta name="color-scheme" content="light dark">
+    <title>SlothInbox — Local-First Intelligent Clutter Organizer</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <style>
-        /* ==========================================================================
-           1. APPLE-GRADE DESIGN SYSTEM & 3D HIGH-CONTRAST VARIABLES
-           ========================================================================== */
-        :root {
-            --bg-canvas: #030712;
-            --bg-surface: #0b0f19;
-            --bg-card: rgba(17, 24, 39, 0.85);
-            --bg-elevated: rgba(30, 41, 59, 0.6);
-            
-            --accent-purple: #8b5cf6;
-            --accent-glow: rgba(139, 92, 246, 0.4);
-            --accent-cyan: #06b6d4;
-            --accent-cyan-glow: rgba(6, 182, 212, 0.4);
-            
-            --text-main: #f8fafc;
-            --text-sub: #94a3b8;
-            --text-muted: #64748b;
-            
-            --border-glass: rgba(255, 255, 255, 0.08);
-            --border-glass-bright: rgba(255, 255, 255, 0.2);
-            --border-depth: rgba(0, 0, 0, 0.8);
-            
-            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            --font-display: 'Bricolage Grotesque', sans-serif;
-            --font-mono: 'JetBrains Mono', monospace;
-            
-            --shadow-apple: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 20px rgba(139, 92, 246, 0.15);
-            --shadow-3d-btn: 0 4px 0 #5b21b6, 0 10px 20px rgba(139, 92, 246, 0.4);
-            --shadow-3d-btn-active: 0 1px 0 #5b21b6, 0 4px 10px rgba(139, 92, 246, 0.2);
-            
-            --transition-apple: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            scrollbar-width: thin;
-            scrollbar-color: var(--accent-purple) var(--bg-canvas);
-        }
-
-        body {
-            font-family: var(--font-sans);
-            color: var(--text-sub);
-            min-height: 100vh;
-            background-color: var(--bg-canvas);
-            background-image: 
-                radial-gradient(circle at 10% 10%, rgba(139, 92, 246, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 90% 90%, rgba(6, 182, 212, 0.06) 0%, transparent 40%),
-                linear-gradient(135deg, #030712 0%, #080e1a 100%);
-            padding: 40px 24px;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        /* ==========================================================================
-           2. APP CONTAINER & MASTER GRID LAYOUT
-           ========================================================================== */
-        .app-wrapper {
-            max-width: 1720px;
-            margin: 0 auto;
-            display: flex;
-            gap: 32px;
-            align-items: flex-start;
-        }
-
-        .sidebar-column {
-            width: 380px;
-            min-width: 380px;
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
-
-        .main-column {
-            flex: 1;
-            min-width: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 28px;
-        }
-
-        /* ==========================================================================
-           3. APPLE-STYLE GLASS & 3D CARD COMPONENTS
-           ========================================================================== */
-        .apple-card {
-            background: var(--bg-card);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
-            border: 1px solid var(--border-glass);
-            border-top: 1px solid var(--border-glass-bright);
-            border-radius: 28px;
-            box-shadow: var(--shadow-apple);
-            padding: 32px;
-            position: relative;
-            overflow: hidden;
-            transition: var(--transition-apple);
-        }
-
-        .apple-card:hover {
-            border-color: rgba(139, 92, 246, 0.3);
-            box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.8), 0 0 30px var(--accent-glow);
-        }
-
-        /* Header Branding */
-        .brand-title {
-            font-family: var(--font-display);
-            font-size: 2.4rem;
-            font-weight: 800;
-            color: var(--text-main);
-            letter-spacing: -0.03em;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-
-        .brand-subtitle {
-            font-family: var(--font-mono);
-            font-size: 0.82rem;
-            color: var(--accent-cyan);
-            margin-top: 6px;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            font-weight: 600;
-        }
-
-        /* ==========================================================================
-           4. INSTAGRAM-INSPIRED CARD FEED & POST GRID
-           ========================================================================== */
-        .feed-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 24px;
-            margin-top: 24px;
-        }
-
-        .column-box {
-            background: rgba(15, 23, 42, 0.75);
-            border-radius: 22px;
-            border: 1px solid var(--border-glass);
-            border-top: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 24px;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-            transition: var(--transition-apple);
-        }
-
-        .column-box:hover {
-            border-color: rgba(139, 92, 246, 0.4);
-            transform: translateY(-3px);
-        }
-
-        .column-header-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border-glass);
-            padding-bottom: 14px;
-        }
-
-        .column-heading {
-            font-family: var(--font-display);
-            font-size: 1.15rem;
-            font-weight: 700;
-            color: var(--text-main);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        /* IG-Style Post Card Component */
-        .ig-post-card {
-            background: linear-gradient(135deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            padding: 18px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-            transition: var(--transition-apple);
-            position: relative;
-        }
-
-        .ig-post-card:hover {
-            transform: translateY(-2px);
-            border-color: var(--accent-cyan);
-            box-shadow: 0 15px 30px rgba(6, 182, 212, 0.25);
-        }
-
-        .ig-user-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .ig-user-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .ig-avatar {
-            width: 32px;
-            height: 32px;
-            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            font-weight: 700;
-            color: #fff;
-        }
-
-        .ig-tag {
-            font-size: 0.72rem;
-            background: rgba(139, 92, 246, 0.2);
-            color: #d8b4fe;
-            border: 1px solid rgba(139, 92, 246, 0.4);
-            padding: 3px 10px;
-            border-radius: 8px;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .ig-content-text {
-            font-family: var(--font-mono);
-            font-size: 0.88rem;
-            color: var(--text-main);
-            line-height: 1.5;
-        }
-
-        .ig-footer-actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            padding-top: 10px;
-            font-size: 0.78rem;
-            color: var(--text-muted);
-        }
-
-        /* ==========================================================================
-           5. INTERACTIVE BUTTONS & CONTROLS
-           ========================================================================== */
-        .apple-btn {
-            background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
-            color: #fff;
-            font-family: var(--font-sans);
-            font-weight: 700;
-            font-size: 0.95rem;
-            padding: 16px 28px;
-            border-radius: 16px;
-            border: none;
-            border-bottom: 4px solid #4c1d95;
-            box-shadow: var(--shadow-3d-btn);
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-            transition: var(--transition-apple);
-        }
-
-        .apple-btn:hover {
-            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 0 #4c1d95, 0 15px 25px rgba(139, 92, 246, 0.5);
-        }
-
-        .apple-btn:active {
-            transform: translateY(2px);
-            box-shadow: var(--shadow-3d-btn-active);
-        }
-
-        .apple-btn-secondary {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-bottom: 4px solid rgba(0, 0, 0, 0.6);
-            box-shadow: 0 4px 0 rgba(0, 0, 0, 0.6), 0 8px 16px rgba(0, 0, 0, 0.4);
-            color: var(--text-sub);
-        }
-
-        .apple-btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--text-main);
-        }
-
-        /* ==========================================================================
-           6. INPUT & TELEMETRY TERMINAL CONSOLE
-           ========================================================================== */
-        .apple-textarea {
-            width: 100%;
-            background: #020617;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            color: var(--text-main);
-            padding: 20px;
-            font-family: var(--font-mono);
-            font-size: 0.9rem;
-            outline: none;
-            resize: vertical;
-            min-height: 160px;
-            box-shadow: inset 0 4px 12px rgba(0, 0, 0, 0.8);
-            transition: var(--transition-apple);
-            line-height: 1.6;
-        }
-
-        .apple-textarea:focus {
-            border-color: var(--accent-purple);
-            box-shadow: inset 0 4px 12px rgba(0, 0, 0, 0.8), 0 0 20px var(--accent-glow);
-        }
-
-        .apple-console {
-            background: #010409;
-            color: #38bdf8;
-            font-family: var(--font-mono);
-            font-size: 0.78rem;
-            padding: 18px;
-            border-radius: 14px;
-            border: 1px solid rgba(56, 189, 248, 0.2);
-            box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.9);
-            max-height: 240px;
-            overflow-y: auto;
-            line-height: 1.6;
-        }
-
-        /* ==========================================================================
-           7. STATS & ANALYTICS BAR
-           ========================================================================== */
-        .stats-row {
-            display: flex;
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-
-        .stat-badge-box {
-            flex: 1;
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            padding: 16px;
-            text-align: center;
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
-        }
-
-        .stat-val {
-            font-family: var(--font-display);
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: var(--accent-cyan);
-            text-shadow: 0 0 10px rgba(6, 182, 212, 0.4);
-        }
-
-        .stat-lbl {
-            font-size: 0.72rem;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: var(--text-muted);
-            margin-top: 4px;
-            font-weight: 700;
-        }
-
-        @media (max-width: 1024px) {
-            .app-wrapper { flex-direction: column; }
-            .sidebar-column { width: 100%; min-width: 100%; }
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Top Progress Bar for Local Inference Telemetry -->
+    <div id="globalProgressBar" class="global-progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
 
-    <div class="app-wrapper">
-        <!-- ================= SIDEBAR COLUMN ================= -->
-        <div class="sidebar-column">
-            <div class="apple-card">
-                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
-                    <div>
-                        <div style="font-size: 1.05rem; font-weight: 800; color: var(--text-main);">Neural Engine Pro</div>
-                        <div style="font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-mono);">WebGPU Client Sandbox</div>
+    <div class="app-layout">
+        <!-- 1. LEFT NAVIGATION SIDEBAR -->
+        <aside class="nav-sidebar" id="navSidebar">
+            <div class="nav-top-section">
+                <div class="nav-brand-container">
+                    <div class="brand-badge">
+                        <i class="fa-solid fa-layer-group"></i>
                     </div>
-                    <i class="fa-solid fa-microchip" style="color: var(--accent-purple); font-size: 1.3rem;"></i>
-                </div>
-
-                <div class="stats-row">
-                    <div class="stat-badge-box">
-                        <div class="stat-val" id="totalSortedCount">0</div>
-                        <div class="stat-lbl">Sorted Nodes</div>
-                    </div>
-                    <div class="stat-badge-box">
-                        <div class="stat-val" style="color: var(--accent-purple);">0ms</div>
-                        <div class="stat-lbl">Server Latency</div>
+                    <div class="brand-text-block">
+                        <span class="brand-name">SlothInbox</span>
+                        <span class="brand-subtext">Local Core v3.4</span>
                     </div>
                 </div>
 
-                <div style="font-size: 0.88rem; font-weight: 800; color: var(--text-main); margin-bottom: 8px;">Runtime Status</div>
-                <div style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent-cyan); margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
-                    <span style="width: 10px; height: 10px; background: var(--accent-cyan); border-radius: 50%; display: inline-block; box-shadow: 0 0 10px var(--accent-cyan);"></span>
-                    Gemma 4 Offline Secure
+                <nav class="nav-menu-list">
+                    <button class="nav-btn active" data-view="feed" id="navFeedBtn">
+                        <i class="fa-solid fa-list-check"></i>
+                        <span class="nav-btn-label">Organized Stream</span>
+                        <span class="nav-counter" id="sidebarStreamCount">0</span>
+                    </button>
+                    <button class="nav-btn" data-view="board" id="navBoardBtn">
+                        <i class="fa-solid fa-table-columns"></i>
+                        <span class="nav-btn-label">Kanban Board</span>
+                    </button>
+                    <button class="nav-btn" data-view="raw" id="navRawBtn">
+                        <i class="fa-solid fa-inbox"></i>
+                        <span class="nav-btn-label">Raw Buffer</span>
+                        <span class="nav-counter nav-counter-accent" id="sidebarBufferCount">0</span>
+                    </button>
+                    <button class="nav-btn" data-view="analytics" id="navAnalyticsBtn">
+                        <i class="fa-solid fa-chart-simple"></i>
+                        <span class="nav-btn-label">Metrics & Audit</span>
+                    </button>
+                    <button class="nav-btn" data-view="settings" id="navSettingsBtn">
+                        <i class="fa-solid fa-sliders"></i>
+                        <span class="nav-btn-label">Preferences</span>
+                    </button>
+                </nav>
+            </div>
+
+            <!-- Sidebar Lower Telemetry Section -->
+            <div class="nav-bottom-section">
+                <div class="engine-status-card" id="engineStatusCard">
+                    <div class="status-card-header">
+                        <span class="pulse-indicator"></span>
+                        <span class="status-text" id="engineStatusText">Gemma 4 WebGPU</span>
+                    </div>
+                    <div class="status-metrics-row">
+                        <div class="status-stat">
+                            <span class="stat-caption">Latency</span>
+                            <span class="stat-data" id="engineLatency">0 ms</span>
+                        </div>
+                        <div class="status-stat">
+                            <span class="stat-caption">Memory</span>
+                            <span class="stat-data" id="engineMemory">0 MB</span>
+                        </div>
+                    </div>
+                    <button class="engine-toggle-btn" id="toggleEngineBtn">
+                        <i class="fa-solid fa-power-off"></i> Toggle Local Engine
+                    </button>
                 </div>
 
-                <div style="font-size: 0.88rem; font-weight: 800; color: var(--text-main); margin-bottom: 8px;">Telemetry Audit Stream</div>
-                <div class="apple-console" id="backendConsoleLog">
-                    [00:00:01] SlothInbox Pro master core online.<br>
-                    [00:00:02] Zero server logs active. WebGPU verified.<br>
-                    [00:00:03] Awaiting brain dump ingestion...
+                <div class="theme-switch-container">
+                    <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle Dark and Light Mode">
+                        <i class="fa-regular fa-sun" id="themeIcon"></i>
+                        <span id="themeLabel">Light Mode</span>
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- 2. MAIN WORKSPACE AREA -->
+        <main class="main-viewport">
+            <!-- Header Bar -->
+            <header class="app-topbar">
+                <div class="topbar-left">
+                    <button class="mobile-nav-toggle" id="mobileMenuToggle" aria-label="Open Navigation">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <div class="breadcrumbs">
+                        <span class="crumb-root">Workspace</span>
+                        <span class="crumb-separator">/</span>
+                        <span class="crumb-current" id="currentViewTitle">Organized Stream</span>
+                    </div>
                 </div>
 
-                <button onclick="clearInboxData()" class="apple-btn apple-btn-secondary" style="width: 100%; margin-top: 24px; font-size: 0.82rem; padding: 12px;">
-                    <i class="fa-solid fa-rotate-right"></i> Reset System Matrix
-                </button>
+                <div class="topbar-center">
+                    <div class="spotlight-search-bar" id="spotlightTrigger">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="globalSearchInput" placeholder="Quick search or press Cmd + K..." autocomplete="off">
+                        <kbd class="shortcut-kbd">⌘K</kbd>
+                    </div>
+                </div>
+
+                <div class="topbar-right">
+                    <button class="topbar-action-btn" id="quickSampleBtn" title="Load Curated Sample Data">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        <span>Sample Data</span>
+                    </button>
+                    <button class="topbar-action-btn" id="exportDataBtn" title="Export Processed Data">
+                        <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                        <span>Export</span>
+                    </button>
+                    <div class="profile-avatar-pill" id="profileBadge">
+                        <span class="avatar-circle">SI</span>
+                        <span class="avatar-label">Local User</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Scrollable View Container -->
+            <div class="view-content-wrapper">
+                
+                <!-- VIEW 1: ORGANIZED FEED / STREAM -->
+                <section class="view-panel active" id="panelFeed">
+                    <div class="feed-layout-grid">
+                        
+                        <!-- Center Primary Column -->
+                        <div class="feed-primary-column">
+                            
+                            <!-- Story-Style Category Tray -->
+                            <div class="category-pill-tray" id="categoryPillTray">
+                                <button class="category-chip active" data-category="all">
+                                    <span class="chip-dot"></span>
+                                    <span class="chip-title">All Items</span>
+                                    <span class="chip-count" id="countAll">0</span>
+                                </button>
+                                <button class="category-chip" data-category="code">
+                                    <span class="chip-dot dot-code"></span>
+                                    <span class="chip-title">Code & Bugfixes</span>
+                                    <span class="chip-count" id="countCode">0</span>
+                                </button>
+                                <button class="category-chip" data-category="tasks">
+                                    <span class="chip-dot dot-tasks"></span>
+                                    <span class="chip-title">Tasks & Work</span>
+                                    <span class="chip-count" id="countTasks">0</span>
+                                </button>
+                                <button class="category-chip" data-category="finances">
+                                    <span class="chip-dot dot-finances"></span>
+                                    <span class="chip-title">Finances & Billing</span>
+                                    <span class="chip-count" id="countFinances">0</span>
+                                </button>
+                                <button class="category-chip" data-category="events">
+                                    <span class="chip-dot dot-events"></span>
+                                    <span class="chip-title">Events & Meetups</span>
+                                    <span class="chip-count" id="countEvents">0</span>
+                                </button>
+                                <button class="category-chip" data-category="notes">
+                                    <span class="chip-dot dot-notes"></span>
+                                    <span class="chip-title">Brain Dumps</span>
+                                    <span class="chip-count" id="countNotes">0</span>
+                                </button>
+                            </div>
+
+                            <!-- Stream Ingestion Card (Minimalist Composer) -->
+                            <div class="composer-container">
+                                <div class="composer-header">
+                                    <div class="composer-user-meta">
+                                        <div class="composer-avatar">
+                                            <i class="fa-solid fa-bolt"></i>
+                                        </div>
+                                        <div>
+                                            <h2 class="composer-heading">Instant Clutter Ingestion</h2>
+                                            <p class="composer-subheading">Unstructured text, chat logs, or code notes are parsed client-side.</p>
+                                        </div>
+                                    </div>
+                                    <div class="composer-badges">
+                                        <span class="badge-privacy"><i class="fa-solid fa-lock"></i> 100% Offline</span>
+                                    </div>
+                                </div>
+
+                                <div class="composer-body">
+                                    <textarea id="clutterTextarea" class="composer-input" placeholder="Type or paste chaotic notes, receipts, meeting items, or bugs here...&#10;e.g., Fix SQL connection timeout, buy ergonomic chair ($280), schedule design sync on Thursday at 3 PM, PR #204 needs review" rows="4"></textarea>
+
+                                    <!-- Dropzone Trigger -->
+                                    <div class="composer-dropzone" id="fileDropzone">
+                                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                                        <span>Drag and drop text, markdown, or JSON files here, or <strong class="browse-link">browse</strong></span>
+                                        <input type="file" id="fileInputHidden" accept=".txt,.md,.json,.csv" style="display:none;">
+                                    </div>
+                                </div>
+
+                                <div class="composer-footer">
+                                    <div class="composer-actions-left">
+                                        <button class="tool-btn" id="formatCleanBtn" title="Clean Formatting">
+                                            <i class="fa-solid fa-wand-magic"></i>
+                                        </button>
+                                        <button class="tool-btn" id="attachSnippetBtn" title="Insert Boilerplate">
+                                            <i class="fa-solid fa-code"></i>
+                                        </button>
+                                        <button class="tool-btn" id="clearComposerBtn" title="Clear Buffer">
+                                            <i class="fa-regular fa-trash-can"></i>
+                                        </button>
+                                    </div>
+                                    <div class="composer-actions-right">
+                                        <button class="btn-secondary" id="btnParseOffline">
+                                            <i class="fa-solid fa-microchip"></i>
+                                            <span>Simulate Parse</span>
+                                        </button>
+                                        <button class="btn-primary" id="btnProcessClutter">
+                                            <i class="fa-solid fa-arrow-down-short-wide"></i>
+                                            <span>Organize Stream</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Filter & Search Bar for Posts -->
+                            <div class="stream-toolbar">
+                                <div class="toolbar-stats">
+                                    Showing <span id="visibleItemCount">0</span> of <span id="totalItemCount">0</span> items
+                                </div>
+                                <div class="toolbar-controls">
+                                    <select class="minimal-select" id="streamSortSelect">
+                                        <option value="newest">Sort: Newest First</option>
+                                        <option value="oldest">Sort: Oldest First</option>
+                                        <option value="priority">Sort: High Priority</option>
+                                        <option value="title">Sort: Alphabetical</option>
+                                    </select>
+                                    <button class="icon-toggle-btn active" id="viewModeDenseToggle" title="Dense Layout">
+                                        <i class="fa-solid fa-bars"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Post Feed Item Stream Container -->
+                            <div class="post-cards-stream" id="postCardsContainer">
+                                <!-- Cards injected dynamically via app.js -->
+                                <div class="empty-state-card" id="feedEmptyState">
+                                    <div class="empty-icon-circle">
+                                        <i class="fa-regular fa-folder-open"></i>
+                                    </div>
+                                    <h3 class="empty-title">Inbox Zero — Sloth Mode Activated</h3>
+                                    <p class="empty-desc">No clutter currently lingering in your workspace. Paste text above or click "Sample Data" to populate realistic entries.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Telemetry & Quick Action Column -->
+                        <aside class="feed-secondary-column">
+                            
+                            <!-- Quick Stats Widget -->
+                            <div class="minimal-card widget-card">
+                                <div class="widget-header">
+                                    <span class="widget-title">Workspace Overview</span>
+                                    <i class="fa-solid fa-chart-pie widget-icon"></i>
+                                </div>
+                                <div class="widget-metric-grid">
+                                    <div class="metric-cell">
+                                        <span class="metric-num" id="metricTotalTasks">0</span>
+                                        <span class="metric-name">Organized Items</span>
+                                    </div>
+                                    <div class="metric-cell">
+                                        <span class="metric-num" id="metricActionable">0</span>
+                                        <span class="metric-name">Action Items</span>
+                                    </div>
+                                    <div class="metric-cell">
+                                        <span class="metric-num" id="metricPrivacyRate">100%</span>
+                                        <span class="metric-name">Offline Rate</span>
+                                    </div>
+                                    <div class="metric-cell">
+                                        <span class="metric-num" id="metricSavedTime">0m</span>
+                                        <span class="metric-name">Time Conserved</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Realtime Telemetry Terminal -->
+                            <div class="minimal-card widget-card">
+                                <div class="widget-header">
+                                    <span class="widget-title">Engine Inference Audit</span>
+                                    <button class="link-btn" id="clearAuditLogBtn">Clear</button>
+                                </div>
+                                <div class="telemetry-terminal-box" id="telemetryTerminalBox">
+                                    <!-- Injected lines -->
+                                </div>
+                                <div class="terminal-footer">
+                                    <span class="terminal-status"><span class="dot-green"></span> Sandboxed WebGPU</span>
+                                    <span class="terminal-version">Gemma-4-Instruct</span>
+                                </div>
+                            </div>
+
+                            <!-- Category Distribution Breakdown -->
+                            <div class="minimal-card widget-card">
+                                <div class="widget-header">
+                                    <span class="widget-title">Category Breakdown</span>
+                                </div>
+                                <div class="category-bars-list" id="categoryBarsList">
+                                    <!-- Category progress bars injected here -->
+                                </div>
+                            </div>
+
+                        </aside>
+                    </div>
+                </section>
+
+                <!-- VIEW 2: KANBAN BOARD -->
+                <section class="view-panel" id="panelBoard">
+                    <div class="board-header-bar">
+                        <div class="board-titles">
+                            <h2 class="board-main-title">Interactive Workflow Board</h2>
+                            <p class="board-subtitle">Drag and drop items between state columns. All states synchronize with local storage.</p>
+                        </div>
+                        <div class="board-controls">
+                            <button class="btn-secondary" id="boardFilterBtn">
+                                <i class="fa-solid fa-filter"></i> Filter
+                            </button>
+                            <button class="btn-primary" id="boardNewCardBtn">
+                                <i class="fa-solid fa-plus"></i> Add Item
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="kanban-grid-wrapper">
+                        <!-- Column 1: Unsorted / Pending -->
+                        <div class="kanban-column" data-status="pending" id="kanbanPending">
+                            <div class="kanban-column-header">
+                                <div class="column-title-wrap">
+                                    <span class="col-indicator col-pending"></span>
+                                    <span class="col-title">Pending Review</span>
+                                </div>
+                                <span class="col-badge" id="badgePendingCount">0</span>
+                            </div>
+                            <div class="kanban-drop-area" data-col="pending" id="colDropPending">
+                                <!-- Cards injected -->
+                            </div>
+                        </div>
+
+                        <!-- Column 2: In Progress -->
+                        <div class="kanban-column" data-status="inprogress" id="kanbanInProgress">
+                            <div class="kanban-column-header">
+                                <div class="column-title-wrap">
+                                    <span class="col-indicator col-active"></span>
+                                    <span class="col-title">In Progress</span>
+                                </div>
+                                <span class="col-badge" id="badgeInProgressCount">0</span>
+                            </div>
+                            <div class="kanban-drop-area" data-col="inprogress" id="colDropInProgress">
+                                <!-- Cards injected -->
+                            </div>
+                        </div>
+
+                        <!-- Column 3: Scheduled -->
+                        <div class="kanban-column" data-status="scheduled" id="kanbanScheduled">
+                            <div class="kanban-column-header">
+                                <div class="column-title-wrap">
+                                    <span class="col-indicator col-scheduled"></span>
+                                    <span class="col-title">Scheduled / Deferred</span>
+                                </div>
+                                <span class="col-badge" id="badgeScheduledCount">0</span>
+                            </div>
+                            <div class="kanban-drop-area" data-col="scheduled" id="colDropScheduled">
+                                <!-- Cards injected -->
+                            </div>
+                        </div>
+
+                        <!-- Column 4: Resolved / Archived -->
+                        <div class="kanban-column" data-status="completed" id="kanbanCompleted">
+                            <div class="kanban-column-header">
+                                <div class="column-title-wrap">
+                                    <span class="col-indicator col-completed"></span>
+                                    <span class="col-title">Completed / Archived</span>
+                                </div>
+                                <span class="col-badge" id="badgeCompletedCount">0</span>
+                            </div>
+                            <div class="kanban-drop-area" data-col="completed" id="colDropCompleted">
+                                <!-- Cards injected -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- VIEW 3: RAW UNORGANIZED BUFFER -->
+                <section class="view-panel" id="panelRaw">
+                    <div class="raw-buffer-container">
+                        <div class="raw-buffer-header">
+                            <div>
+                                <h2 class="view-section-title">Raw Data Buffer</h2>
+                                <p class="view-section-sub">Inspect unstructured fragments before local model tokenization and sorting.</p>
+                            </div>
+                            <div class="raw-actions">
+                                <button class="btn-secondary" id="rawClearAllBtn">
+                                    <i class="fa-regular fa-trash-can"></i> Purge Buffer
+                                </button>
+                                <button class="btn-primary" id="rawBatchProcessBtn">
+                                    <i class="fa-solid fa-play"></i> Process Entire Batch
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="raw-table-wrapper">
+                            <table class="minimal-table" id="rawBufferTable">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 40px;"><input type="checkbox" id="selectAllRawCheck"></th>
+                                        <th style="width: 80px;">Index</th>
+                                        <th>Raw Fragment</th>
+                                        <th style="width: 140px;">Detected Intent</th>
+                                        <th style="width: 120px;">Length</th>
+                                        <th style="width: 100px;">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="rawBufferTbody">
+                                    <!-- Injected -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- VIEW 4: METRICS & AUDIT LOGS -->
+                <section class="view-panel" id="panelAnalytics">
+                    <div class="analytics-page-grid">
+                        <div class="minimal-card analytics-card">
+                            <h3 class="card-heading">Model Performance & Resource Allocation</h3>
+                            <p class="card-subheading">Client-side WebGPU execution profiling and tensor memory telemetry.</p>
+                            <div class="stats-big-row">
+                                <div class="stat-unit">
+                                    <span class="unit-val" id="statInferenceRuns">0</span>
+                                    <span class="unit-lbl">Inference Passes</span>
+                                </div>
+                                <div class="stat-unit">
+                                    <span class="unit-val" id="statAvgLatency">0 ms</span>
+                                    <span class="unit-lbl">Avg Response Time</span>
+                                </div>
+                                <div class="stat-unit">
+                                    <span class="unit-val" id="statTokensProcessed">0</span>
+                                    <span class="unit-lbl">Tokens Parsed</span>
+                                </div>
+                                <div class="stat-unit">
+                                    <span class="unit-val">0 B</span>
+                                    <span class="unit-lbl">Cloud Network I/O</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="minimal-card analytics-card">
+                            <h3 class="card-heading">Comprehensive Telemetry History</h3>
+                            <div class="audit-history-list" id="auditHistoryList">
+                                <!-- Injected -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- VIEW 5: PREFERENCES & SETTINGS -->
+                <section class="view-panel" id="panelSettings">
+                    <div class="settings-page-wrapper">
+                        <div class="settings-section">
+                            <h3 class="settings-title">Inference Engine Configuration</h3>
+                            <p class="settings-desc">Adjust local model execution parameters for Google Gemma running in your browser.</p>
+                            
+                            <div class="setting-item">
+                                <div class="setting-meta">
+                                    <label class="setting-label">Selected Model Weight</label>
+                                    <span class="setting-hint">Open-weight Gemma instruction-tuned model.</span>
+                                </div>
+                                <select class="minimal-select" id="modelSelect">
+                                    <option value="gemma-2b-it">Google Gemma 2B Instruct (Client WebGPU)</option>
+                                    <option value="gemma-7b-it">Google Gemma 7B Instruct (High RAM)</option>
+                                    <option value="heuristic-rules">Fast Heuristic Local Engine (Instantaneous)</option>
+                                </select>
+                            </div>
+
+                            <div class="setting-item">
+                                <div class="setting-meta">
+                                    <label class="setting-label">Parsing Temperature</label>
+                                    <span class="setting-hint">Controls classification variance. Lower values yield stricter grouping.</span>
+                                </div>
+                                <input type="range" class="minimal-range" id="paramTemperature" min="0" max="1" step="0.05" value="0.2">
+                            </div>
+
+                            <div class="setting-item">
+                                <div class="setting-meta">
+                                    <label class="setting-label">Automated Ingestion on Paste</label>
+                                    <span class="setting-hint">Automatically parse unstructured text when pasted into the composer.</span>
+                                </div>
+                                <input type="checkbox" class="minimal-checkbox" id="autoParseCheck" checked>
+                            </div>
+                        </div>
+
+                        <div class="settings-section">
+                            <h3 class="settings-title">Data Storage & Persistence</h3>
+                            <p class="settings-desc">Manage local storage, offline cache, and data exports.</p>
+                            
+                            <div class="setting-item">
+                                <div class="setting-meta">
+                                    <label class="setting-label">Export All Storage</label>
+                                    <span class="setting-hint">Download complete JSON dump containing all organized items.</span>
+                                </div>
+                                <button class="btn-secondary" id="btnExportJson">
+                                    <i class="fa-solid fa-download"></i> Download JSON
+                                </button>
+                            </div>
+
+                            <div class="setting-item">
+                                <div class="setting-meta">
+                                    <label class="setting-label">Reset Local Database</label>
+                                    <span class="setting-hint">Wipe all local inbox records, states, and telemetry logs.</span>
+                                </div>
+                                <button class="btn-danger" id="btnWipeStorage">
+                                    <i class="fa-solid fa-triangle-exclamation"></i> Purge All Records
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- 3. DETAIL / EDIT ITEM MODAL -->
+    <div class="modal-overlay" id="editModalOverlay">
+        <div class="modal-window">
+            <div class="modal-header">
+                <h3 class="modal-title" id="editModalHeading">Item Details</h3>
+                <button class="modal-close-btn" id="closeEditModalBtn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="editItemForm">
+                    <input type="hidden" id="editItemId">
+                    <div class="form-group">
+                        <label class="form-label">Title / Summary</label>
+                        <input type="text" class="minimal-input" id="editItemTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Raw Ingestion Content</label>
+                        <textarea class="minimal-textarea" id="editItemContent" rows="3"></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Category</label>
+                            <select class="minimal-select" id="editItemCategory">
+                                <option value="code">Code & Development</option>
+                                <option value="tasks">General Tasks</option>
+                                <option value="finances">Finances & Bills</option>
+                                <option value="events">Events & Schedules</option>
+                                <option value="notes">Notes & Thoughts</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Workflow Status</label>
+                            <select class="minimal-select" id="editItemStatus">
+                                <option value="pending">Pending</option>
+                                <option value="inprogress">In Progress</option>
+                                <option value="scheduled">Scheduled</option>
+                                <option value="completed">Completed</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Priority</label>
+                        <select class="minimal-select" id="editItemPriority">
+                            <option value="low">Low Priority</option>
+                            <option value="medium">Medium Priority</option>
+                            <option value="high">High Priority</option>
+                            <option value="critical">Critical / Urgent</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="cancelEditModalBtn">Cancel</button>
+                <button class="btn-primary" id="saveEditModalBtn">Save Changes</button>
             </div>
         </div>
+    </div>
 
-        <!-- ================= MAIN COLUMN ================= -->
-        <div class="main-column">
-            <div class="apple-card" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
-                <div>
-                    <h1 class="brand-title">SlothInbox Pro 🦥</h1>
-                    <div class="brand-subtitle">Apple-Grade Minimalist & IG-Card Matrix Automation</div>
-                </div>
-                <button onclick="wakeSlothEngine()" id="engineBtn" class="apple-btn">
-                    <i class="fa-solid fa-bolt"></i> Engage Neural Engine
-                </button>
+    <!-- 4. COMMAND PALETTE MODAL (CMD + K) -->
+    <div class="modal-overlay" id="commandModalOverlay">
+        <div class="command-palette-window">
+            <div class="command-palette-input-wrap">
+                <i class="fa-solid fa-terminal command-icon"></i>
+                <input type="text" class="command-search-input" id="commandInput" placeholder="Type a command or jump to view..." autocomplete="off">
             </div>
-
-            <!-- INGESTION INTERFACE -->
-            <div class="apple-card">
-                <div style="font-size: 1.25rem; font-weight: 800; color: var(--text-main); margin-bottom: 12px; font-family: var(--font-display);">
-                    Brain Dump & Clutter Ingestion Stream
+            <div class="command-list" id="commandList">
+                <div class="command-row" data-cmd="feed">
+                    <span class="cmd-text"><i class="fa-solid fa-list-check"></i> Go to Organized Stream</span>
+                    <kbd>1</kbd>
                 </div>
-                <div style="font-size: 0.9rem; color: var(--text-sub); margin-bottom: 20px; line-height: 1.6;">
-                    Channel your inner sloth. Drop your unstructured group chat notes, pending task lists, or random code fragments below. The local agentic parser will sort everything instantly into beautiful Instagram-style category cards.
+                <div class="command-row" data-cmd="board">
+                    <span class="cmd-text"><i class="fa-solid fa-table-columns"></i> Go to Kanban Board</span>
+                    <kbd>2</kbd>
                 </div>
-                
-                <textarea id="clutterInput" class="apple-textarea" placeholder="e.g., Fix high-contrast layout bug in React component, buy cloud server credits tomorrow, review security audit PR #902, schedule team sync on Friday..."></textarea>
-                
-                <div style="display: flex; gap: 16px; margin-top: 20px; flex-wrap: wrap;">
-                    <button class="apple-btn" onclick="processClutter()" style="flex: 1; min-width: 240px;">
-                        <i class="fa-solid fa-wand-magic-sparkles"></i> Execute Matrix Sorting 🌿
-                    </button>
-                    <button class="apple-btn apple-btn-secondary" onclick="loadSampleClutter()">
-                        <i class="fa-solid fa-file-lines"></i> Load Sample Data
-                    </button>
+                <div class="command-row" data-cmd="raw">
+                    <span class="cmd-text"><i class="fa-solid fa-inbox"></i> Inspect Raw Buffer</span>
+                    <kbd>3</kbd>
                 </div>
-            </div>
-
-            <!-- IG-STYLE FEED COLUMNS -->
-            <div class="apple-card">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                    <div style="font-size: 1.25rem; font-weight: 800; color: var(--text-main); font-family: var(--font-display);">
-                        Structured Matrix Feed
-                    </div>
-                    <div style="font-size: 0.85rem; font-family: var(--font-mono); color: var(--accent-cyan);" id="syncStatus">
-                        Status: Feed Synced
-                    </div>
+                <div class="command-row" data-cmd="sample">
+                    <span class="cmd-text"><i class="fa-solid fa-wand-magic-sparkles"></i> Load Realistic Sample Dataset</span>
+                    <kbd>S</kbd>
                 </div>
-
-                <div class="feed-grid" id="inboxFeedContainer">
-                    <!-- FEED 1: CODE & TECH -->
-                    <div class="column-box">
-                        <div class="column-header-row">
-                            <span class="column-heading"><i class="fa-solid fa-code" style="color: var(--accent-purple);"></i> Code & Dev Tasks</span>
-                            <span style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-muted);" id="count-code">0 items</span>
-                        </div>
-                        <div id="list-code" style="display: flex; flex-direction: column; gap: 12px;">
-                            <div style="font-size: 0.85rem; color: var(--text-muted); font-style: italic; padding: 10px;">Feed awaiting input stream.</div>
-                        </div>
-                    </div>
-
-                    <!-- FEED 2: ERRANDS & PURCHASES -->
-                    <div class="column-box">
-                        <div class="column-header-row">
-                            <span class="column-heading"><i class="fa-solid fa-cart-shopping" style="color: var(--accent-cyan);"></i> Errands & Purchases</span>
-                            <span style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-muted);" id="count-errands">0 items</span>
-                        </div>
-                        <div id="list-errands" style="display: flex; flex-direction: column; gap: 12px;">
-                            <div style="font-size: 0.85rem; color: var(--text-muted); font-style: italic; padding: 10px;">Feed awaiting input stream.</div>
-                        </div>
-                    </div>
-
-                    <!-- FEED 3: SCHEDULES & MEETINGS -->
-                    <div class="column-box">
-                        <div class="column-header-row">
-                            <span class="column-heading"><i class="fa-solid fa-calendar-days" style="color: #ec4899;"></i> Schedules & Events</span>
-                            <span style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-muted);" id="count-schedule">0 items</span>
-                        </div>
-                        <div id="list-schedule" style="display: flex; flex-direction: column; gap: 12px;">
-                            <div style="font-size: 0.85rem; color: var(--text-muted); font-style: italic; padding: 10px;">Feed awaiting input stream.</div>
-                        </div>
-                    </div>
+                <div class="command-row" data-cmd="theme">
+                    <span class="cmd-text"><i class="fa-solid fa-circle-half-stroke"></i> Toggle Color Theme (Light/Dark)</span>
+                    <kbd>T</kbd>
+                </div>
+                <div class="command-row" data-cmd="export">
+                    <span class="cmd-text"><i class="fa-solid fa-download"></i> Export Processed Data as JSON</span>
+                    <kbd>E</kbd>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- ================= MASTER SCRIPT ENGINE ================= -->
-    <script>
-        /**
-         * SlothInbox Pro Master Architecture
-         * Handles local state, IG-style component rendering, and WebGPU Gemma telemetry simulations.
-         */
-        class SlothMasterEngine {
-            constructor() {
-                this.store = {
-                    code: [],
-                    errands: [],
-                    schedule: []
-                };
-                this.telemetryLogCount = 0;
-            }
+    <!-- 5. TOAST NOTIFICATION CONTAINER -->
+    <div class="toast-container" id="toastContainer" aria-live="polite"></div>
 
-            init() {
-                this.log("SlothInbox Pro client kernel loaded successfully.");
-            }
-
-            log(text) {
-                const box = document.getElementById('backendConsoleLog');
-                const time = new Date().toTimeString().split(' ')[0];
-                const msg = `[${time}] ${text}`;
-                if (box) {
-                    box.innerHTML += `<br>${msg}`;
-                    box.scrollTop = box.scrollHeight;
-                }
-            }
-
-            wakeUp() {
-                const btn = document.getElementById('engineBtn');
-                if (btn) {
-                    btn.innerHTML = `<i class="fa-solid fa-check"></i> Neural Engine Engaged`;
-                    btn.style.background = "linear-gradient(135deg, #059669 0%, #047857 100%)";
-                }
-                this.log("Gemma 4 weights initialized in local browser memory via WebGPU.");
-            }
-
-            loadSample() {
-                const sampleText = "Fix high-contrast layout bug in React component, buy cloud server credits tomorrow, review security audit PR #902, schedule team sync on Friday, pay domain renewal invoice";
-                const textarea = document.getElementById('clutterInput');
-                if (textarea) textarea.value = sampleText;
-                this.log("Loaded professional sample test suite into ingestion buffer.");
-            }
-
-            processInput(raw) {
-                if (!raw.trim()) return;
-                this.log("Executing local heuristic tokenization pass...");
-
-                const items = raw.split(/,|\n/).map(s => s.trim()).filter(Boolean);
-                this.store = { code: [], errands: [], schedule: [] };
-
-                items.forEach(node => {
-                    const lower = node.toLowerCase();
-                    if (lower.includes('bug') || lower.includes('react') || lower.includes('pr') || lower.includes('code') || lower.includes('component')) {
-                        this.store.code.push({ text: node, tag: 'Engineering' });
-                    } else if (lower.includes('buy') || lower.includes('credits') || lower.includes('invoice') || lower.includes('pay') || lower.includes('shopping')) {
-                        this.store.errands.push({ text: node, tag: 'Financial' });
-                    } else {
-                        this.store.schedule.push({ text: node, tag: 'Calendar' });
-                    }
-                });
-
-                this.renderFeed();
-                this.log(`Successfully mapped ${items.length} nodes into IG-style feed cards.`);
-            }
-
-            renderFeed() {
-                let totalNodes = 0;
-
-                ['code', 'errands', 'schedule'].forEach(cat => {
-                    const container = document.getElementById(`list-${cat}`);
-                    const badge = document.getElementById(`count-${cat}`);
-                    const list = this.store[cat];
-
-                    if (badge) badge.innerText = `${list.length} items`;
-                    totalNodes += list.length;
-
-                    if (list.length === 0) {
-                        if (container) container.innerHTML = `<div style="font-size: 0.85rem; color: var(--text-muted); font-style: italic; padding: 10px;">Feed awaiting input stream.</div>`;
-                    } else {
-                        if (container) {
-                            container.innerHTML = list.map(element => `
-                                <div class="ig-post-card">
-                                    <div class="ig-user-row">
-                                        <div class="ig-user-info">
-                                            <div class="ig-avatar">SI</div>
-                                            <span style="font-size: 0.82rem; font-weight: 700; color: var(--text-main);">SlothInbox Bot</span>
-                                        </div>
-                                        <span class="ig-tag">${element.tag}</span>
-                                    </div>
-                                    <div class="ig-content-text">${element.text}</div>
-                                    <div class="ig-footer-actions">
-                                        <span><i class="fa-regular fa-clock"></i> Just now</span>
-                                        <span><i class="fa-solid fa-shield-halved" style="color: var(--accent-cyan);"></i> Offline Secure</span>
-                                    </div>
-                                </div>
-                            `).join('');
-                        }
-                    }
-                });
-
-                const totalEl = document.getElementById('totalSortedCount');
-                if (totalEl) totalEl.innerText = totalNodes;
-            }
-
-            resetState() {
-                this.store = { code: [], errands: [], schedule: [] };
-                const textarea = document.getElementById('clutterInput');
-                if (textarea) textarea.value = '';
-                this.renderFeed();
-                this.log("System matrix state successfully re-initialized.");
-            }
-        }
-
-        const appEngine = new SlothMasterEngine();
-
-        function wakeSlothEngine() { appEngine.wakeUp(); }
-        function loadSampleClutter() { appEngine.loadSample(); }
-        function processClutter() {
-            const val = document.getElementById('clutterInput').value;
-            if (!val) { alert("Please provide input text."); return; }
-            document.getElementById('syncStatus').innerText = "Status: Parsing Feed...";
-            setTimeout(() => {
-                appEngine.processInput(val);
-                document.getElementById('syncStatus').innerText = "Status: Feed Synced";
-            }, 500);
-        }
-        function clearInboxData() { appEngine.resetState(); }
-
-        window.addEventListener('DOMContentLoaded', () => { appEngine.init(); });
-    </script>
+    <!-- Scripts: Modular Architecture -->
+    <script src="data.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
