@@ -430,16 +430,38 @@ class SlothAppController {
         this.showToast("Item deleted.");
     }
 
-    likeItem(id, btn) {
-        const item = this.items.find(i => i.id === id);
-        if (item) {
+ likeItem(id, btn) {
+    const item = this.items.find(i => i.id === id);
+    if (item) {
+        item.likes = (item.likes || 0) + 1;
+        btn.querySelector("span").innerText = item.likes;
+        btn.querySelector("i").className = "fa-solid fa-heart";
+        btn.style.color = "var(--danger-red)";
+        this.saveItems();
+    }
+}
+```[cite: 4]
+
+With this toggle logic:
+```javascript
+likeItem(id, btn) {
+    const item = this.items.find(i => i.id === id);
+    if (item) {
+        if (!item.isLiked) {
+            item.isLiked = true;
             item.likes = (item.likes || 0) + 1;
-            btn.querySelector("span").innerText = item.likes;
             btn.querySelector("i").className = "fa-solid fa-heart";
             btn.style.color = "var(--danger-red)";
-            this.saveItems();
+        } else {
+            item.isLiked = false;
+            item.likes = Math.max(0, (item.likes || 1) - 1);
+            btn.querySelector("i").className = "fa-regular fa-heart";
+            btn.style.color = "";
         }
+        btn.querySelector("span").innerText = item.likes;
+        this.saveItems();
     }
+}
 
     cycleItemStatus(id) {
         const statuses = ["pending", "inprogress", "scheduled", "completed"];
