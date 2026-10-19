@@ -1,23 +1,25 @@
 # SlothInbox 🦥
 
-> **Channel Your Inner Sloth: Automate the Digital Clutter You Keep Putting Off**
+> **Local-First, Privacy-Preserving Intelligent Digital Workspace & Clutter Tidier**
 
-SlothInbox is a local-first, privacy-focused micro-SaaS web utility built for the Hacktoberfest *Slow and Steady* challenge. Designed for developers, freelancers, and overwhelmed students who hate sorting through digital chaos, SlothInbox takes messy brain dumps, scattered task lists, and unorganized text snippets, automatically categorizing, tagging, and archiving them into pristine project categories entirely offline.
+SlothInbox is an offline-capable, client-side productivity system built for the Hacktoberfest *Slow and Steady* challenge. It automates the organization of messy digital clutter—unstructured notes, code bug reports, billing records, and calendar entries—into an actionable, categorized stream and Kanban workflow entirely on your local machine using client-side heuristics and Google's open-weight Gemma architecture via WebGPU.
+
+---
 
 ## 🚀 Key Features
-* **Zero Server Data Leakage:** Powered by Google's open-weight **Gemma** model running entirely client-side via WebGPU and Transformers.js. Your personal notes, task lists, and data never leave your laptop.
-* **Sloth-Speed Automation:** Paste raw, unstructured brain dumps once, and let the local agentic parser structure, prioritize, and sort everything into clean folders.
-* **Zero Infrastructure Cost:** Static deployment via GitHub Pages means $0 operating costs with zero API rate limits or subscription fees.
-* **Built with GitHub Copilot:** Rapidly engineered and refactored with GitHub Copilot to ensure clean UI architecture and high-performance local processing logic.
 
-## 🛠️ Tech Stack
-* **Frontend:** HTML5, CSS3, JavaScript (ES Modules, Drag-and-Drop API, LocalStorage persistence)
-* **AI Runtime:** Hugging Face Transformers.js + WebGPU (Gemma local inference sandbox)
-* **Hosting:** GitHub Pages
+* **Zero-Server Processing & 100% Data Privacy:** Built on client-side WebGPU architecture. Your confidential meeting notes, code snippets, and financial receipts never leave your browser or hit external third-party servers.
+* **Intelligent Clutter Ingestion:** Paste chaotic text dumps, upload Markdown/JSON files, or drop snippets directly into the composer. The local engine automatically classifies content into Code, Tasks, Finances, Events, or Notes.
+* **Interactive Kanban Workflow:** Switch between an organized feed, an interactive drag-and-drop Kanban board, and a raw buffer inspector.
+* **Subtle Monochrome Aesthetic:** A distraction-free design system featuring light and true OLED dark modes, 1px borders, and zero intrusive neon animations.
+* **Keyboard-First Navigation:** Press `Cmd + K` (or `Ctrl + K`) anytime to invoke the Command Palette and switch workspaces, load datasets, or export backups.
+* **Zero Infrastructure Overhead:** Deployed entirely as a static web client via GitHub Pages with no subscription costs, rate limits, or backend server bills.
 
-## 📦 Live Demo
-Check out the live application: [https://maitriii08.github.io/SlothInbox/](https://maitriii08.github.io/SlothInbox/)
+---
 
-## 🏆 Hacktoberfest Submission
-Built for the **Hacktoberfest Open-Source AI Challenge Week 3: Slow and Steady**. 
-* **Partner Categories:** Best Use of Gemma, Best Use of GitHub Copilot
+## 🛠️ Tech Stack & Modular Architecture
+
+* **Frontend:** Semantic HTML5, CSS3 Custom Properties (Design Tokens, Responsive Grid, OLED Dark Mode)
+* **Application Layer:** Modular Vanilla JavaScript (State Machine, Drag & Drop API, LocalStorage persistence)
+* **AI & Parser Engine:** Client-side heuristic intent extraction with Google Gemma 4 WebGPU execution sandbox
+* **Deployment:** GitHub Pages
