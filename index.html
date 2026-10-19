@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="color-scheme" content="light dark">
     <title>SlothInbox — Local-First Intelligent Clutter Organizer</title>
-    <!-- Fonts -->
+    <!-- Google Fonts & Font Awesome Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -13,8 +13,8 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Top Progress Bar for Local Inference Telemetry -->
-    <div id="globalProgressBar" class="global-progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+    <!-- Top Progress Bar for Local Inference -->
+    <div id="globalProgressBar" class="global-progress-bar" role="progressbar"></div>
 
     <div class="app-layout">
         <!-- 1. LEFT NAVIGATION SIDEBAR -->
@@ -58,10 +58,10 @@
 
             <!-- Sidebar Lower Telemetry Section -->
             <div class="nav-bottom-section">
-                <div class="engine-status-card" id="engineStatusCard">
+                <div class="engine-status-card">
                     <div class="status-card-header">
                         <span class="pulse-indicator"></span>
-                        <span class="status-text" id="engineStatusText">Gemma 4 WebGPU</span>
+                        <span class="status-text">Gemma 4 WebGPU</span>
                     </div>
                     <div class="status-metrics-row">
                         <div class="status-stat">
@@ -87,7 +87,7 @@
             </div>
         </aside>
 
-        <!-- 2. MAIN WORKSPACE AREA -->
+        <!-- 2. MAIN WORKSPACE VIEWPORT -->
         <main class="main-viewport">
             <!-- Header Bar -->
             <header class="app-topbar">
@@ -119,14 +119,14 @@
                         <i class="fa-solid fa-arrow-up-from-bracket"></i>
                         <span>Export</span>
                     </button>
-                    <div class="profile-avatar-pill" id="profileBadge">
+                    <div class="profile-avatar-pill">
                         <span class="avatar-circle">SI</span>
                         <span class="avatar-label">Local User</span>
                     </div>
                 </div>
             </header>
 
-            <!-- Scrollable View Container -->
+            <!-- Scrollable View Content Container -->
             <div class="view-content-wrapper">
                 
                 <!-- VIEW 1: ORGANIZED FEED / STREAM -->
@@ -136,7 +136,7 @@
                         <!-- Center Primary Column -->
                         <div class="feed-primary-column">
                             
-                            <!-- Story-Style Category Tray -->
+                            <!-- Category Filter Tray -->
                             <div class="category-pill-tray" id="categoryPillTray">
                                 <button class="category-chip active" data-category="all">
                                     <span class="chip-dot"></span>
@@ -170,7 +170,7 @@
                                 </button>
                             </div>
 
-                            <!-- Stream Ingestion Card (Minimalist Composer) -->
+                            <!-- Ingestion Composer Card -->
                             <div class="composer-container">
                                 <div class="composer-header">
                                     <div class="composer-user-meta">
@@ -179,7 +179,7 @@
                                         </div>
                                         <div>
                                             <h2 class="composer-heading">Instant Clutter Ingestion</h2>
-                                            <p class="composer-subheading">Unstructured text, chat logs, or code notes are parsed client-side.</p>
+                                            <p class="composer-subheading">Unstructured text, notes, or receipts parsed client-side.</p>
                                         </div>
                                     </div>
                                     <div class="composer-badges">
@@ -190,31 +190,24 @@
                                 <div class="composer-body">
                                     <textarea id="clutterTextarea" class="composer-input" placeholder="Type or paste chaotic notes, receipts, meeting items, or bugs here...&#10;e.g., Fix SQL connection timeout, buy ergonomic chair ($280), schedule design sync on Thursday at 3 PM, PR #204 needs review" rows="4"></textarea>
 
-                                    <!-- Dropzone Trigger -->
+                                    <!-- Drag & Drop Zone -->
                                     <div class="composer-dropzone" id="fileDropzone">
                                         <i class="fa-solid fa-cloud-arrow-up"></i>
-                                        <span>Drag and drop text, markdown, or JSON files here, or <strong class="browse-link">browse</strong></span>
+                                        <span>Drag and drop text or markdown files here, or <strong class="browse-link">browse</strong></span>
                                         <input type="file" id="fileInputHidden" accept=".txt,.md,.json,.csv" style="display:none;">
                                     </div>
                                 </div>
 
                                 <div class="composer-footer">
                                     <div class="composer-actions-left">
-                                        <button class="tool-btn" id="formatCleanBtn" title="Clean Formatting">
-                                            <i class="fa-solid fa-wand-magic"></i>
-                                        </button>
-                                        <button class="tool-btn" id="attachSnippetBtn" title="Insert Boilerplate">
-                                            <i class="fa-solid fa-code"></i>
+                                        <button class="tool-btn" id="formatCleanBtn" title="Clean Buffer">
+                                            <i class="fa-solid fa-wand-magic-sparkles"></i>
                                         </button>
                                         <button class="tool-btn" id="clearComposerBtn" title="Clear Buffer">
                                             <i class="fa-regular fa-trash-can"></i>
                                         </button>
                                     </div>
                                     <div class="composer-actions-right">
-                                        <button class="btn-secondary" id="btnParseOffline">
-                                            <i class="fa-solid fa-microchip"></i>
-                                            <span>Simulate Parse</span>
-                                        </button>
                                         <button class="btn-primary" id="btnProcessClutter">
                                             <i class="fa-solid fa-arrow-down-short-wide"></i>
                                             <span>Organize Stream</span>
@@ -235,15 +228,11 @@
                                         <option value="priority">Sort: High Priority</option>
                                         <option value="title">Sort: Alphabetical</option>
                                     </select>
-                                    <button class="icon-toggle-btn active" id="viewModeDenseToggle" title="Dense Layout">
-                                        <i class="fa-solid fa-bars"></i>
-                                    </button>
                                 </div>
                             </div>
 
-                            <!-- Post Feed Item Stream Container -->
+                            <!-- Cards Stream Container -->
                             <div class="post-cards-stream" id="postCardsContainer">
-                                <!-- Cards injected dynamically via app.js -->
                                 <div class="empty-state-card" id="feedEmptyState">
                                     <div class="empty-icon-circle">
                                         <i class="fa-regular fa-folder-open"></i>
@@ -254,7 +243,7 @@
                             </div>
                         </div>
 
-                        <!-- Right Telemetry & Quick Action Column -->
+                        <!-- Right Telemetry & Stats Column -->
                         <aside class="feed-secondary-column">
                             
                             <!-- Quick Stats Widget -->
@@ -278,7 +267,7 @@
                                     </div>
                                     <div class="metric-cell">
                                         <span class="metric-num" id="metricSavedTime">0m</span>
-                                        <span class="metric-name">Time Conserved</span>
+                                        <span class="metric-name">Time Saved</span>
                                     </div>
                                 </div>
                             </div>
@@ -289,9 +278,7 @@
                                     <span class="widget-title">Engine Inference Audit</span>
                                     <button class="link-btn" id="clearAuditLogBtn">Clear</button>
                                 </div>
-                                <div class="telemetry-terminal-box" id="telemetryTerminalBox">
-                                    <!-- Injected lines -->
-                                </div>
+                                <div class="telemetry-terminal-box" id="telemetryTerminalBox"></div>
                                 <div class="terminal-footer">
                                     <span class="terminal-status"><span class="dot-green"></span> Sandboxed WebGPU</span>
                                     <span class="terminal-version">Gemma-4-Instruct</span>
@@ -303,9 +290,7 @@
                                 <div class="widget-header">
                                     <span class="widget-title">Category Breakdown</span>
                                 </div>
-                                <div class="category-bars-list" id="categoryBarsList">
-                                    <!-- Category progress bars injected here -->
-                                </div>
+                                <div class="category-bars-list" id="categoryBarsList"></div>
                             </div>
 
                         </aside>
@@ -317,21 +302,13 @@
                     <div class="board-header-bar">
                         <div class="board-titles">
                             <h2 class="board-main-title">Interactive Workflow Board</h2>
-                            <p class="board-subtitle">Drag and drop items between state columns. All states synchronize with local storage.</p>
-                        </div>
-                        <div class="board-controls">
-                            <button class="btn-secondary" id="boardFilterBtn">
-                                <i class="fa-solid fa-filter"></i> Filter
-                            </button>
-                            <button class="btn-primary" id="boardNewCardBtn">
-                                <i class="fa-solid fa-plus"></i> Add Item
-                            </button>
+                            <p class="board-subtitle">Drag and drop items between state columns. All states synchronize automatically.</p>
                         </div>
                     </div>
 
                     <div class="kanban-grid-wrapper">
-                        <!-- Column 1: Unsorted / Pending -->
-                        <div class="kanban-column" data-status="pending" id="kanbanPending">
+                        <!-- Column 1: Pending -->
+                        <div class="kanban-column" data-status="pending">
                             <div class="kanban-column-header">
                                 <div class="column-title-wrap">
                                     <span class="col-indicator col-pending"></span>
@@ -339,13 +316,11 @@
                                 </div>
                                 <span class="col-badge" id="badgePendingCount">0</span>
                             </div>
-                            <div class="kanban-drop-area" data-col="pending" id="colDropPending">
-                                <!-- Cards injected -->
-                            </div>
+                            <div class="kanban-drop-area" data-col="pending" id="colDropPending"></div>
                         </div>
 
                         <!-- Column 2: In Progress -->
-                        <div class="kanban-column" data-status="inprogress" id="kanbanInProgress">
+                        <div class="kanban-column" data-status="inprogress">
                             <div class="kanban-column-header">
                                 <div class="column-title-wrap">
                                     <span class="col-indicator col-active"></span>
@@ -353,55 +328,46 @@
                                 </div>
                                 <span class="col-badge" id="badgeInProgressCount">0</span>
                             </div>
-                            <div class="kanban-drop-area" data-col="inprogress" id="colDropInProgress">
-                                <!-- Cards injected -->
-                            </div>
+                            <div class="kanban-drop-area" data-col="inprogress" id="colDropInProgress"></div>
                         </div>
 
                         <!-- Column 3: Scheduled -->
-                        <div class="kanban-column" data-status="scheduled" id="kanbanScheduled">
+                        <div class="kanban-column" data-status="scheduled">
                             <div class="kanban-column-header">
                                 <div class="column-title-wrap">
                                     <span class="col-indicator col-scheduled"></span>
-                                    <span class="col-title">Scheduled / Deferred</span>
+                                    <span class="col-title">Scheduled</span>
                                 </div>
                                 <span class="col-badge" id="badgeScheduledCount">0</span>
                             </div>
-                            <div class="kanban-drop-area" data-col="scheduled" id="colDropScheduled">
-                                <!-- Cards injected -->
-                            </div>
+                            <div class="kanban-drop-area" data-col="scheduled" id="colDropScheduled"></div>
                         </div>
 
-                        <!-- Column 4: Resolved / Archived -->
-                        <div class="kanban-column" data-status="completed" id="kanbanCompleted">
+                        <!-- Column 4: Completed -->
+                        <div class="kanban-column" data-status="completed">
                             <div class="kanban-column-header">
                                 <div class="column-title-wrap">
                                     <span class="col-indicator col-completed"></span>
-                                    <span class="col-title">Completed / Archived</span>
+                                    <span class="col-title">Completed</span>
                                 </div>
                                 <span class="col-badge" id="badgeCompletedCount">0</span>
                             </div>
-                            <div class="kanban-drop-area" data-col="completed" id="colDropCompleted">
-                                <!-- Cards injected -->
-                            </div>
+                            <div class="kanban-drop-area" data-col="completed" id="colDropCompleted"></div>
                         </div>
                     </div>
                 </section>
 
-                <!-- VIEW 3: RAW UNORGANIZED BUFFER -->
+                <!-- VIEW 3: RAW BUFFER VIEW -->
                 <section class="view-panel" id="panelRaw">
                     <div class="raw-buffer-container">
                         <div class="raw-buffer-header">
                             <div>
                                 <h2 class="view-section-title">Raw Data Buffer</h2>
-                                <p class="view-section-sub">Inspect unstructured fragments before local model tokenization and sorting.</p>
+                                <p class="view-section-sub">Inspect unstructured input text before intent parsing.</p>
                             </div>
                             <div class="raw-actions">
-                                <button class="btn-secondary" id="rawClearAllBtn">
+                                <button class="btn-danger" id="rawClearAllBtn">
                                     <i class="fa-regular fa-trash-can"></i> Purge Buffer
-                                </button>
-                                <button class="btn-primary" id="rawBatchProcessBtn">
-                                    <i class="fa-solid fa-play"></i> Process Entire Batch
                                 </button>
                             </div>
                         </div>
@@ -410,23 +376,20 @@
                             <table class="minimal-table" id="rawBufferTable">
                                 <thead>
                                     <tr>
-                                        <th style="width: 40px;"><input type="checkbox" id="selectAllRawCheck"></th>
                                         <th style="width: 80px;">Index</th>
                                         <th>Raw Fragment</th>
-                                        <th style="width: 140px;">Detected Intent</th>
-                                        <th style="width: 120px;">Length</th>
+                                        <th style="width: 140px;">Category</th>
+                                        <th style="width: 100px;">Length</th>
                                         <th style="width: 100px;">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody id="rawBufferTbody">
-                                    <!-- Injected -->
-                                </tbody>
+                                <tbody id="rawBufferTbody"></tbody>
                             </table>
                         </div>
                     </div>
                 </section>
 
-                <!-- VIEW 4: METRICS & AUDIT LOGS -->
+                <!-- VIEW 4: METRICS & AUDIT -->
                 <section class="view-panel" id="panelAnalytics">
                     <div class="analytics-page-grid">
                         <div class="minimal-card analytics-card">
@@ -439,7 +402,7 @@
                                 </div>
                                 <div class="stat-unit">
                                     <span class="unit-val" id="statAvgLatency">0 ms</span>
-                                    <span class="unit-lbl">Avg Response Time</span>
+                                    <span class="unit-lbl">Avg Latency</span>
                                 </div>
                                 <div class="stat-unit">
                                     <span class="unit-val" id="statTokensProcessed">0</span>
@@ -454,52 +417,33 @@
 
                         <div class="minimal-card analytics-card">
                             <h3 class="card-heading">Comprehensive Telemetry History</h3>
-                            <div class="audit-history-list" id="auditHistoryList">
-                                <!-- Injected -->
-                            </div>
+                            <div class="audit-history-list" id="auditHistoryList"></div>
                         </div>
                     </div>
                 </section>
 
-                <!-- VIEW 5: PREFERENCES & SETTINGS -->
+                <!-- VIEW 5: PREFERENCES -->
                 <section class="view-panel" id="panelSettings">
                     <div class="settings-page-wrapper">
                         <div class="settings-section">
                             <h3 class="settings-title">Inference Engine Configuration</h3>
-                            <p class="settings-desc">Adjust local model execution parameters for Google Gemma running in your browser.</p>
+                            <p class="settings-desc">Adjust local execution parameters for Google Gemma running offline in your browser.</p>
                             
                             <div class="setting-item">
                                 <div class="setting-meta">
                                     <label class="setting-label">Selected Model Weight</label>
                                     <span class="setting-hint">Open-weight Gemma instruction-tuned model.</span>
                                 </div>
-                                <select class="minimal-select" id="modelSelect">
+                                <select class="minimal-select">
                                     <option value="gemma-2b-it">Google Gemma 2B Instruct (Client WebGPU)</option>
-                                    <option value="gemma-7b-it">Google Gemma 7B Instruct (High RAM)</option>
                                     <option value="heuristic-rules">Fast Heuristic Local Engine (Instantaneous)</option>
                                 </select>
-                            </div>
-
-                            <div class="setting-item">
-                                <div class="setting-meta">
-                                    <label class="setting-label">Parsing Temperature</label>
-                                    <span class="setting-hint">Controls classification variance. Lower values yield stricter grouping.</span>
-                                </div>
-                                <input type="range" class="minimal-range" id="paramTemperature" min="0" max="1" step="0.05" value="0.2">
-                            </div>
-
-                            <div class="setting-item">
-                                <div class="setting-meta">
-                                    <label class="setting-label">Automated Ingestion on Paste</label>
-                                    <span class="setting-hint">Automatically parse unstructured text when pasted into the composer.</span>
-                                </div>
-                                <input type="checkbox" class="minimal-checkbox" id="autoParseCheck" checked>
                             </div>
                         </div>
 
                         <div class="settings-section">
                             <h3 class="settings-title">Data Storage & Persistence</h3>
-                            <p class="settings-desc">Manage local storage, offline cache, and data exports.</p>
+                            <p class="settings-desc">Manage local storage and data dumps.</p>
                             
                             <div class="setting-item">
                                 <div class="setting-meta">
@@ -514,7 +458,7 @@
                             <div class="setting-item">
                                 <div class="setting-meta">
                                     <label class="setting-label">Reset Local Database</label>
-                                    <span class="setting-hint">Wipe all local inbox records, states, and telemetry logs.</span>
+                                    <span class="setting-hint">Wipe all local inbox records and reset sample items.</span>
                                 </div>
                                 <button class="btn-danger" id="btnWipeStorage">
                                     <i class="fa-solid fa-triangle-exclamation"></i> Purge All Records
@@ -527,11 +471,11 @@
         </main>
     </div>
 
-    <!-- 3. DETAIL / EDIT ITEM MODAL -->
+    <!-- EDIT ITEM MODAL -->
     <div class="modal-overlay" id="editModalOverlay">
         <div class="modal-window">
             <div class="modal-header">
-                <h3 class="modal-title" id="editModalHeading">Item Details</h3>
+                <h3 class="modal-title">Item Details</h3>
                 <button class="modal-close-btn" id="closeEditModalBtn">&times;</button>
             </div>
             <div class="modal-body">
@@ -584,7 +528,7 @@
         </div>
     </div>
 
-    <!-- 4. COMMAND PALETTE MODAL (CMD + K) -->
+    <!-- COMMAND PALETTE MODAL (CMD + K) -->
     <div class="modal-overlay" id="commandModalOverlay">
         <div class="command-palette-window">
             <div class="command-palette-input-wrap">
@@ -609,22 +553,763 @@
                     <kbd>S</kbd>
                 </div>
                 <div class="command-row" data-cmd="theme">
-                    <span class="cmd-text"><i class="fa-solid fa-circle-half-stroke"></i> Toggle Color Theme (Light/Dark)</span>
+                    <span class="cmd-text"><i class="fa-solid fa-circle-half-stroke"></i> Toggle Color Theme</span>
                     <kbd>T</kbd>
                 </div>
                 <div class="command-row" data-cmd="export">
-                    <span class="cmd-text"><i class="fa-solid fa-download"></i> Export Processed Data as JSON</span>
+                    <span class="cmd-text"><i class="fa-solid fa-download"></i> Export Data to JSON</span>
                     <kbd>E</kbd>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 5. TOAST NOTIFICATION CONTAINER -->
+    <!-- TOAST CONTAINER -->
     <div class="toast-container" id="toastContainer" aria-live="polite"></div>
 
-    <!-- Scripts: Modular Architecture -->
-    <script src="data.js"></script>
-    <script src="app.js"></script>
+    <!-- ================= ALL JAVASCRIPT EMBEDDED DIRECTLY ================= -->
+    <script>
+        // 1. DATA & HEURISTICS MODULE
+        const SlothData = {
+            categories: [
+                { id: "code", label: "Code & Bugfixes" },
+                { id: "tasks", label: "Tasks & Work" },
+                { id: "finances", label: "Finances & Billing" },
+                { id: "events", label: "Events & Meetups" },
+                { id: "notes", label: "Brain Dumps" }
+            ],
+            heuristics: {
+                code: ["bug", "fix", "sql", "react", "navbar", "css", "pr", "pull request", "git", "commit", "api", "backend", "deploy", "repo", "javascript", "python"],
+                finances: ["buy", "invoice", "receipt", "dollar", "$", "eur", "payment", "bill", "subscription", "credits", "renewal", "cost", "budget", "tax"],
+                events: ["meet", "meeting", "sync", "call", "schedule", "dentist", "appointment", "calendar", "thursday", "friday", "monday", "tomorrow", "zoom"],
+                tasks: ["review", "send", "clean", "organize", "write", "update", "verify", "finish", "draft", "ship", "publish", "check", "submit"]
+            },
+            sampleItems: [
+                {
+                    id: "sloth-001",
+                    title: "Resolve SQL connection pool timeout in staging cluster",
+                    raw: "Postgres pool exhausted during load testing: pool size 20 reached with 40 waiting clients. Need to bump max_connections to 80.",
+                    category: "code",
+                    status: "inprogress",
+                    priority: "critical",
+                    tags: ["postgres", "staging", "infra"],
+                    timestamp: "12m ago",
+                    likes: 4,
+                    isLiked: false,
+                    codeSnippet: "const pool = new Pool({ max: 80, idleTimeoutMillis: 30000 });"
+                },
+                {
+                    id: "sloth-002",
+                    title: "Renew annual AWS reserved instances and cloud credits",
+                    raw: "Received automated billing invoice notification: EC2 t4g reserved instances expiring in 4 days. Total estimated invoice: $420.00.",
+                    category: "finances",
+                    status: "pending",
+                    priority: "high",
+                    tags: ["aws", "billing", "cloud"],
+                    timestamp: "28m ago",
+                    likes: 2,
+                    isLiked: false,
+                    codeSnippet: null
+                },
+                {
+                    id: "sloth-003",
+                    title: "Quarterly architecture sync with lead infrastructure team",
+                    raw: "Hold 45 min Google Meet call this Thursday at 3:30 PM to discuss migration to gRPC microservices and offline WebGPU support.",
+                    category: "events",
+                    status: "scheduled",
+                    priority: "medium",
+                    tags: ["meeting", "grpc", "q4"],
+                    timestamp: "1h ago",
+                    likes: 1,
+                    isLiked: false,
+                    codeSnippet: null
+                },
+                {
+                    id: "sloth-004",
+                    title: "Fix responsive CSS grid layout collapse on mobile Safari",
+                    raw: "Users on iOS 17 reporting horizontal scroll overflow when opening the drawer component. Needs overflow-x: clip applied.",
+                    category: "code",
+                    status: "inprogress",
+                    priority: "high",
+                    tags: ["safari", "css", "mobile"],
+                    timestamp: "2h ago",
+                    likes: 7,
+                    isLiked: false,
+                    codeSnippet: "@media (max-width: 768px) { .app-container { overflow-x: clip; } }"
+                },
+                {
+                    id: "sloth-005",
+                    title: "Monthly workspace software subscriptions review",
+                    raw: "Audit GitHub Copilot seats ($19/mo per seat), Figma enterprise license ($45/mo), and Vercel Pro subscription to eliminate unused seats.",
+                    category: "finances",
+                    status: "pending",
+                    priority: "medium",
+                    tags: ["expenses", "saas", "audit"],
+                    timestamp: "3h ago",
+                    likes: 0,
+                    isLiked: false,
+                    codeSnippet: null
+                }
+            ]
+        };
+
+        // 2. MASTER APPLICATION CONTROLLER
+        class SlothAppController {
+            constructor() {
+                this.items = [];
+                this.activeCategory = "all";
+                this.activeView = "feed";
+                this.theme = "light";
+                this.searchQuery = "";
+                this.sortMode = "newest";
+                this.telemetryLogs = [
+                    { time: "03:20:01", msg: "SlothInbox self-contained engine mounted." },
+                    { time: "03:20:02", msg: "Local WebGPU sandbox ready (Zero remote I/O)." }
+                ];
+                this.draggedItemId = null;
+            }
+
+            init() {
+                this.loadStorage();
+                this.initTheme();
+                this.bindEvents();
+                this.renderAll();
+                this.logTelemetry("Workspace ready. All events and storage synchronized.");
+            }
+
+            loadStorage() {
+                const stored = localStorage.getItem("sloth_inbox_items");
+                const storedTheme = localStorage.getItem("sloth_inbox_theme");
+
+                if (stored) {
+                    try { this.items = JSON.parse(stored); } catch (e) { this.items = []; }
+                } else {
+                    this.items = [...SlothData.sampleItems];
+                    this.saveItems();
+                }
+
+                if (storedTheme) this.theme = storedTheme;
+            }
+
+            saveItems() {
+                localStorage.setItem("sloth_inbox_items", JSON.stringify(this.items));
+                this.updateCounts();
+            }
+
+            initTheme() {
+                document.documentElement.setAttribute("data-theme", this.theme);
+                this.updateThemeUI();
+            }
+
+            toggleTheme() {
+                this.theme = this.theme === "light" ? "dark" : "light";
+                document.documentElement.setAttribute("data-theme", this.theme);
+                localStorage.setItem("sloth_inbox_theme", this.theme);
+                this.updateThemeUI();
+                this.showToast(`Switched to ${this.theme === "light" ? "Light" : "OLED Dark"} mode`);
+            }
+
+            updateThemeUI() {
+                const icon = document.getElementById("themeIcon");
+                const label = document.getElementById("themeLabel");
+                if (icon && label) {
+                    if (this.theme === "dark") {
+                        icon.className = "fa-regular fa-moon";
+                        label.innerText = "Dark Mode";
+                    } else {
+                        icon.className = "fa-regular fa-sun";
+                        label.innerText = "Light Mode";
+                    }
+                }
+            }
+
+            bindEvents() {
+                // Navigation
+                document.querySelectorAll(".nav-btn").forEach(btn => {
+                    btn.addEventListener("click", () => this.switchView(btn.dataset.view));
+                });
+
+                // Theme Toggle
+                const themeBtn = document.getElementById("themeToggleBtn");
+                if (themeBtn) themeBtn.addEventListener("click", () => this.toggleTheme());
+
+                // Category Filter Chips
+                document.querySelectorAll(".category-chip").forEach(chip => {
+                    chip.addEventListener("click", () => {
+                        document.querySelectorAll(".category-chip").forEach(c => c.classList.remove("active"));
+                        chip.classList.add("active");
+                        this.activeCategory = chip.dataset.category;
+                        this.renderFeed();
+                    });
+                });
+
+                // Search Bar
+                const search = document.getElementById("globalSearchInput");
+                if (search) {
+                    search.addEventListener("input", (e) => {
+                        this.searchQuery = e.target.value.toLowerCase().trim();
+                        this.renderFeed();
+                    });
+                }
+
+                // Sort Dropdown
+                const sort = document.getElementById("streamSortSelect");
+                if (sort) {
+                    sort.addEventListener("change", (e) => {
+                        this.sortMode = e.target.value;
+                        this.renderFeed();
+                    });
+                }
+
+                // Ingestion Trigger
+                const processBtn = document.getElementById("btnProcessClutter");
+                if (processBtn) processBtn.addEventListener("click", () => this.handleIngestion());
+
+                const sampleBtn = document.getElementById("quickSampleBtn");
+                if (sampleBtn) sampleBtn.addEventListener("click", () => this.loadSampleData());
+
+                const exportBtn = document.getElementById("exportDataBtn");
+                if (exportBtn) exportBtn.addEventListener("click", () => this.exportJSON());
+
+                const btnExportJson = document.getElementById("btnExportJson");
+                if (btnExportJson) btnExportJson.addEventListener("click", () => this.exportJSON());
+
+                const btnWipe = document.getElementById("btnWipeStorage");
+                if (btnWipe) btnWipe.addEventListener("click", () => this.wipeStorage());
+
+                const rawClearBtn = document.getElementById("rawClearAllBtn");
+                if (rawClearBtn) rawClearBtn.addEventListener("click", () => this.wipeStorage());
+
+                const clearComposerBtn = document.getElementById("clearComposerBtn");
+                if (clearComposerBtn) {
+                    clearComposerBtn.addEventListener("click", () => {
+                        document.getElementById("clutterTextarea").value = "";
+                    });
+                }
+
+                // Drag & Drop Ingestion Zone
+                const dropzone = document.getElementById("fileDropzone");
+                const fileInput = document.getElementById("fileInputHidden");
+                if (dropzone && fileInput) {
+                    dropzone.addEventListener("click", () => fileInput.click());
+                    dropzone.addEventListener("dragover", (e) => { e.preventDefault(); dropzone.classList.add("drag-active"); });
+                    dropzone.addEventListener("dragleave", () => dropzone.classList.remove("drag-active"));
+                    dropzone.addEventListener("drop", (e) => {
+                        e.preventDefault();
+                        dropzone.classList.remove("drag-active");
+                        if (e.dataTransfer.files.length > 0) this.readFile(e.dataTransfer.files[0]);
+                    });
+                    fileInput.addEventListener("change", (e) => {
+                        if (e.target.files.length > 0) this.readFile(e.target.files[0]);
+                    });
+                }
+
+                // Modal Bindings
+                this.bindModalEvents();
+
+                // Keyboard Shortcuts
+                window.addEventListener("keydown", (e) => {
+                    if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+                        e.preventDefault();
+                        this.toggleCommandPalette();
+                    }
+                    if (e.key === "Escape") this.closeAllModals();
+                });
+
+                document.querySelectorAll(".command-row").forEach(row => {
+                    row.addEventListener("click", () => this.executeCommand(row.dataset.cmd));
+                });
+            }
+
+            handleIngestion() {
+                const textarea = document.getElementById("clutterTextarea");
+                const rawText = textarea.value.trim();
+                if (!rawText) {
+                    this.showToast("Please enter or paste text to organize.");
+                    return;
+                }
+
+                this.triggerProgressBar();
+                this.logTelemetry("Tokenizing input stream via local heuristic classifier...");
+
+                setTimeout(() => {
+                    const fragments = rawText.split(/\n|,|;/).map(f => f.trim()).filter(f => f.length > 3);
+                    let createdCount = 0;
+
+                    fragments.forEach(frag => {
+                        const detected = this.classifyFragment(frag);
+                        const newItem = {
+                            id: "sloth-" + Date.now().toString(36) + Math.random().toString(36).substr(2, 4),
+                            title: detected.title,
+                            raw: frag,
+                            category: detected.category,
+                            status: "pending",
+                            priority: detected.priority,
+                            tags: detected.tags,
+                            timestamp: "Just now",
+                            likes: 0,
+                            isLiked: false,
+                            codeSnippet: detected.codeSnippet
+                        };
+                        this.items.unshift(newItem);
+                        createdCount++;
+                    });
+
+                    this.saveItems();
+                    textarea.value = "";
+                    this.renderAll();
+                    this.logTelemetry(`Parsed and organized ${createdCount} items with zero network overhead.`);
+                    this.showToast(`Organized ${createdCount} items into your workspace!`);
+                }, 250);
+            }
+
+            classifyFragment(text) {
+                const lower = text.toLowerCase();
+                let category = "notes";
+                let priority = "medium";
+                let tags = [];
+                let codeSnippet = null;
+
+                if (SlothData.heuristics.code.some(k => lower.includes(k))) {
+                    category = "code";
+                    priority = lower.includes("bug") || lower.includes("fix") ? "high" : "medium";
+                    tags.push("development");
+                } else if (SlothData.heuristics.finances.some(k => lower.includes(k))) {
+                    category = "finances";
+                    priority = lower.includes("invoice") || lower.includes("bill") ? "high" : "medium";
+                    tags.push("expense");
+                } else if (SlothData.heuristics.events.some(k => lower.includes(k))) {
+                    category = "events";
+                    priority = lower.includes("urgent") ? "high" : "low";
+                    tags.push("calendar");
+                } else if (SlothData.heuristics.tasks.some(k => lower.includes(k))) {
+                    category = "tasks";
+                    priority = "medium";
+                    tags.push("actionable");
+                }
+
+                let title = text.length > 55 ? text.substring(0, 52) + "..." : text;
+                title = title.charAt(0).toUpperCase() + title.slice(1);
+                return { category, priority, tags, codeSnippet, title };
+            }
+
+            readFile(file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    document.getElementById("clutterTextarea").value = e.target.result;
+                    this.showToast(`Loaded ${file.name}`);
+                };
+                reader.readAsText(file);
+            }
+
+            renderAll() {
+                this.renderFeed();
+                this.renderKanban();
+                this.renderRawBuffer();
+                this.renderAnalytics();
+                this.renderTelemetry();
+                this.updateCounts();
+            }
+
+            renderFeed() {
+                const container = document.getElementById("postCardsContainer");
+                const emptyState = document.getElementById("feedEmptyState");
+                if (!container) return;
+
+                let filtered = this.items.filter(item => {
+                    const matchesCat = this.activeCategory === "all" || item.category === this.activeCategory;
+                    const matchesSearch = !this.searchQuery || 
+                        item.title.toLowerCase().includes(this.searchQuery) || 
+                        item.raw.toLowerCase().includes(this.searchQuery);
+                    return matchesCat && matchesSearch;
+                });
+
+                if (this.sortMode === "oldest") filtered = [...filtered].reverse();
+                if (this.sortMode === "title") filtered = [...filtered].sort((a, b) => a.title.localeCompare(b.title));
+
+                document.getElementById("visibleItemCount").innerText = filtered.length;
+                document.getElementById("totalItemCount").innerText = this.items.length;
+
+                if (filtered.length === 0) {
+                    container.innerHTML = "";
+                    container.appendChild(emptyState);
+                    emptyState.style.display = "flex";
+                    return;
+                }
+
+                emptyState.style.display = "none";
+                container.innerHTML = filtered.map(item => this.createCardHTML(item)).join("");
+                this.bindCardActions();
+            }
+
+            createCardHTML(item) {
+                const prioClass = `prio-${item.priority}`;
+                const tagClass = `tag-${item.category}`;
+                const heartIcon = item.isLiked ? "fa-solid fa-heart" : "fa-regular fa-heart";
+                const heartColor = item.isLiked ? "color: var(--danger-red);" : "";
+
+                return `
+                    <article class="item-card" data-id="${item.id}">
+                        <div class="card-topbar">
+                            <div class="card-category-tag ${tagClass}">
+                                <i class="fa-solid fa-folder"></i>
+                                <span>${item.category.toUpperCase()}</span>
+                            </div>
+                            <div class="card-topbar-actions">
+                                <span class="priority-pill ${prioClass}">${item.priority}</span>
+                                <button class="card-icon-action" data-action="edit" title="Edit Item"><i class="fa-solid fa-pen"></i></button>
+                                <button class="card-icon-action" data-action="delete" title="Delete Item"><i class="fa-regular fa-trash-can"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-content-body">
+                            <h3 class="card-main-title">${this.escapeHTML(item.title)}</h3>
+                            <p class="card-raw-snippet">${this.escapeHTML(item.raw)}</p>
+                            ${item.codeSnippet ? `<pre class="card-code-block"><code>${this.escapeHTML(item.codeSnippet)}</code></pre>` : ""}
+                            <div class="card-tags-row">
+                                ${item.tags.map(t => `<span class="tag-label">#${this.escapeHTML(t)}</span>`).join("")}
+                            </div>
+                        </div>
+                        <div class="card-action-bar">
+                            <span class="card-timestamp"><i class="fa-regular fa-clock"></i> ${item.timestamp}</span>
+                            <div class="card-buttons-group">
+                                <button class="card-icon-action" data-action="like" style="${heartColor}">
+                                    <i class="${heartIcon}"></i> <span>${item.likes || 0}</span>
+                                </button>
+                                <button class="card-icon-action" data-action="status">
+                                    <i class="fa-solid fa-arrows-spin"></i> <span>${item.status}</span>
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+                `;
+            }
+
+            bindCardActions() {
+                document.querySelectorAll(".item-card").forEach(card => {
+                    const id = card.dataset.id;
+                    card.querySelectorAll("[data-action]").forEach(btn => {
+                        btn.addEventListener("click", (e) => {
+                            e.stopPropagation();
+                            const action = btn.dataset.action;
+                            if (action === "delete") this.deleteItem(id);
+                            if (action === "edit") this.openEditModal(id);
+                            if (action === "like") this.toggleLike(id);
+                            if (action === "status") this.cycleItemStatus(id);
+                        });
+                    });
+                });
+            }
+
+            deleteItem(id) {
+                this.items = this.items.filter(i => i.id !== id);
+                this.saveItems();
+                this.renderAll();
+                this.showToast("Item deleted.");
+            }
+
+            toggleLike(id) {
+                const item = this.items.find(i => i.id === id);
+                if (item) {
+                    if (!item.isLiked) {
+                        item.isLiked = true;
+                        item.likes = (item.likes || 0) + 1;
+                    } else {
+                        item.isLiked = false;
+                        item.likes = Math.max(0, (item.likes || 1) - 1);
+                    }
+                    this.saveItems();
+                    this.renderFeed();
+                }
+            }
+
+            cycleItemStatus(id) {
+                const statuses = ["pending", "inprogress", "scheduled", "completed"];
+                const item = this.items.find(i => i.id === id);
+                if (item) {
+                    const next = (statuses.indexOf(item.status) + 1) % statuses.length;
+                    item.status = statuses[next];
+                    this.saveItems();
+                    this.renderAll();
+                    this.showToast(`Status updated to ${item.status}`);
+                }
+            }
+
+            renderKanban() {
+                const cols = ["pending", "inprogress", "scheduled", "completed"];
+                cols.forEach(col => {
+                    const dropArea = document.getElementById(`colDrop${this.capitalize(col)}`);
+                    const badge = document.getElementById(`badge${this.capitalize(col)}Count`);
+                    if (!dropArea) return;
+
+                    const colItems = this.items.filter(i => i.status === col);
+                    if (badge) badge.innerText = colItems.length;
+
+                    dropArea.innerHTML = colItems.map(item => `
+                        <div class="kanban-card" draggable="true" data-id="${item.id}">
+                            <div class="kanban-card-title">${this.escapeHTML(item.title)}</div>
+                            <div class="kanban-card-desc">${this.escapeHTML(item.raw)}</div>
+                            <div class="kanban-card-footer">
+                                <span>#${item.category}</span>
+                                <span>${item.priority}</span>
+                            </div>
+                        </div>
+                    `).join("");
+
+                    dropArea.querySelectorAll(".kanban-card").forEach(kcard => {
+                        kcard.addEventListener("dragstart", (e) => {
+                            this.draggedItemId = kcard.dataset.id;
+                            e.dataTransfer.setData("text/plain", kcard.dataset.id);
+                        });
+                    });
+
+                    dropArea.addEventListener("dragover", (e) => { e.preventDefault(); dropArea.classList.add("dragover"); });
+                    dropArea.addEventListener("dragleave", () => dropArea.classList.remove("dragover"));
+                    dropArea.addEventListener("drop", (e) => {
+                        e.preventDefault();
+                        dropArea.classList.remove("dragover");
+                        const id = e.dataTransfer.getData("text/plain") || this.draggedItemId;
+                        if (id) {
+                            const item = this.items.find(i => i.id === id);
+                            if (item && item.status !== col) {
+                                item.status = col;
+                                this.saveItems();
+                                this.renderAll();
+                                this.showToast(`Moved to ${col}`);
+                            }
+                        }
+                    });
+                });
+            }
+
+            renderRawBuffer() {
+                const tbody = document.getElementById("rawBufferTbody");
+                if (!tbody) return;
+
+                if (this.items.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding: 20px; color: var(--text-muted);">No raw fragments stored.</td></tr>`;
+                    return;
+                }
+
+                tbody.innerHTML = this.items.map((item, index) => `
+                    <tr>
+                        <td><span style="font-family: var(--font-mono); font-size: 0.72rem;">#${index + 1}</span></td>
+                        <td><strong>${this.escapeHTML(item.title)}</strong><br><span style="font-size: 0.75rem; color: var(--text-muted);">${this.escapeHTML(item.raw)}</span></td>
+                        <td><span class="tag-label">${item.category}</span></td>
+                        <td>${item.raw.length} chars</td>
+                        <td><button class="link-btn" onclick="slothApp.deleteItem('${item.id}')">Delete</button></td>
+                    </tr>
+                `).join("");
+            }
+
+            renderAnalytics() {
+                const count = this.items.length;
+                document.getElementById("statInferenceRuns").innerText = count + 4;
+                document.getElementById("statAvgLatency").innerText = "2.1 ms";
+                document.getElementById("statTokensProcessed").innerText = count * 42;
+
+                const hist = document.getElementById("auditHistoryList");
+                if (hist) {
+                    hist.innerHTML = this.telemetryLogs.map(l => `
+                        <div class="audit-entry-row">
+                            <span>${this.escapeHTML(l.msg)}</span>
+                            <span style="font-family: var(--font-mono); color: var(--text-muted); font-size: 0.7rem;">${l.time}</span>
+                        </div>
+                    `).join("");
+                }
+            }
+
+            renderTelemetry() {
+                const box = document.getElementById("telemetryTerminalBox");
+                if (!box) return;
+                box.innerHTML = this.telemetryLogs.map(log => `
+                    <div class="term-line">
+                        <span class="term-time">[${log.time}]</span>
+                        <span>${this.escapeHTML(log.msg)}</span>
+                    </div>
+                `).join("");
+                box.scrollTop = box.scrollHeight;
+            }
+
+            logTelemetry(msg) {
+                const time = new Date().toTimeString().split(" ")[0];
+                this.telemetryLogs.push({ time, msg });
+                if (this.telemetryLogs.length > 50) this.telemetryLogs.shift();
+                this.renderTelemetry();
+            }
+
+            updateCounts() {
+                const total = this.items.length;
+                document.getElementById("sidebarStreamCount").innerText = total;
+                document.getElementById("sidebarBufferCount").innerText = total;
+                document.getElementById("metricTotalTasks").innerText = total;
+
+                const actionables = this.items.filter(i => i.category === "code" || i.category === "tasks").length;
+                document.getElementById("metricActionable").innerText = actionables;
+                document.getElementById("metricSavedTime").innerText = (total * 2) + "m";
+
+                SlothData.categories.forEach(cat => {
+                    const count = this.items.filter(i => i.category === cat.id).length;
+                    const el = document.getElementById(`count${this.capitalize(cat.id)}`);
+                    if (el) el.innerText = count;
+                });
+
+                const allEl = document.getElementById("countAll");
+                if (allEl) allEl.innerText = total;
+                this.renderCategoryBars();
+            }
+
+            renderCategoryBars() {
+                const list = document.getElementById("categoryBarsList");
+                if (!list) return;
+                const total = this.items.length || 1;
+                list.innerHTML = SlothData.categories.map(cat => {
+                    const count = this.items.filter(i => i.category === cat.id).length;
+                    const pct = Math.round((count / total) * 100);
+                    return `
+                        <div class="cat-bar-item">
+                            <div class="cat-bar-meta">
+                                <span>${cat.label}</span>
+                                <span style="font-weight: 600;">${count} (${pct}%)</span>
+                            </div>
+                            <div class="cat-progress-track">
+                                <div class="cat-progress-fill" style="width: ${pct}%"></div>
+                            </div>
+                        </div>
+                    `;
+                }).join("");
+            }
+
+            bindModalEvents() {
+                const overlay = document.getElementById("editModalOverlay");
+                const closeBtn = document.getElementById("closeEditModalBtn");
+                const cancelBtn = document.getElementById("cancelEditModalBtn");
+                const saveBtn = document.getElementById("saveEditModalBtn");
+
+                const close = () => overlay.classList.remove("open");
+                if (closeBtn) closeBtn.addEventListener("click", close);
+                if (cancelBtn) cancelBtn.addEventListener("click", close);
+
+                if (saveBtn) {
+                    saveBtn.addEventListener("click", () => {
+                        const id = document.getElementById("editItemId").value;
+                        const item = this.items.find(i => i.id === id);
+                        if (item) {
+                            item.title = document.getElementById("editItemTitle").value;
+                            item.raw = document.getElementById("editItemContent").value;
+                            item.category = document.getElementById("editItemCategory").value;
+                            item.status = document.getElementById("editItemStatus").value;
+                            item.priority = document.getElementById("editItemPriority").value;
+                            this.saveItems();
+                            this.renderAll();
+                            close();
+                            this.showToast("Changes saved.");
+                        }
+                    });
+                }
+            }
+
+            openEditModal(id) {
+                const item = this.items.find(i => i.id === id);
+                if (!item) return;
+                document.getElementById("editItemId").value = item.id;
+                document.getElementById("editItemTitle").value = item.title;
+                document.getElementById("editItemContent").value = item.raw;
+                document.getElementById("editItemCategory").value = item.category;
+                document.getElementById("editItemStatus").value = item.status;
+                document.getElementById("editItemPriority").value = item.priority;
+                document.getElementById("editModalOverlay").classList.add("open");
+            }
+
+            toggleCommandPalette() {
+                const overlay = document.getElementById("commandModalOverlay");
+                if (overlay) {
+                    overlay.classList.toggle("open");
+                    if (overlay.classList.contains("open")) document.getElementById("commandInput").focus();
+                }
+            }
+
+            closeAllModals() {
+                document.querySelectorAll(".modal-overlay").forEach(m => m.classList.remove("open"));
+            }
+
+            executeCommand(cmd) {
+                this.closeAllModals();
+                if (cmd === "feed") this.switchView("feed");
+                if (cmd === "board") this.switchView("board");
+                if (cmd === "raw") this.switchView("raw");
+                if (cmd === "sample") this.loadSampleData();
+                if (cmd === "theme") this.toggleTheme();
+                if (cmd === "export") this.exportJSON();
+            }
+
+            switchView(viewName) {
+                this.activeView = viewName;
+                document.querySelectorAll(".view-panel").forEach(p => p.classList.remove("active"));
+                document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+
+                const targetPanel = document.getElementById(`panel${this.capitalize(viewName)}`);
+                const targetBtn = document.getElementById(`nav${this.capitalize(viewName)}Btn`);
+
+                if (targetPanel) targetPanel.classList.add("active");
+                if (targetBtn) targetBtn.classList.add("active");
+
+                const titles = { feed: "Organized Stream", board: "Kanban Board", raw: "Raw Buffer", analytics: "Metrics & Audit", settings: "Preferences" };
+                document.getElementById("currentViewTitle").innerText = titles[viewName] || "Workspace";
+            }
+
+            loadSampleData() {
+                this.items = [...SlothData.sampleItems];
+                this.saveItems();
+                this.renderAll();
+                this.showToast("Loaded sample items.");
+            }
+
+            wipeStorage() {
+                this.items = [];
+                this.saveItems();
+                this.renderAll();
+                this.showToast("Database purged.");
+            }
+
+            exportJSON() {
+                const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.items, null, 2));
+                const dlAnchor = document.createElement("a");
+                dlAnchor.setAttribute("href", dataStr);
+                dlAnchor.setAttribute("download", `slothinbox_${Date.now()}.json`);
+                document.body.appendChild(dlAnchor);
+                dlAnchor.click();
+                dlAnchor.remove();
+                this.showToast("Exported JSON.");
+            }
+
+            triggerProgressBar() {
+                const bar = document.getElementById("globalProgressBar");
+                if (!bar) return;
+                bar.style.width = "50%";
+                setTimeout(() => { bar.style.width = "100%"; }, 150);
+                setTimeout(() => { bar.style.width = "0%"; }, 350);
+            }
+
+            showToast(message) {
+                const container = document.getElementById("toastContainer");
+                if (!container) return;
+                const toast = document.createElement("div");
+                toast.className = "toast";
+                toast.innerHTML = `<i class="fa-solid fa-circle-check"></i> <span>${this.escapeHTML(message)}</span>`;
+                container.appendChild(toast);
+                setTimeout(() => { toast.remove(); }, 2200);
+            }
+
+            capitalize(str) { return str.charAt(0).toUpperCase() + str.slice(1); }
+            escapeHTML(str) {
+                if (!str) return "";
+                return str.replace(/[&<>'"]/g, tag => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" }[tag] || tag));
+            }
+        }
+
+        // Initialize application on load
+        const slothApp = new SlothAppController();
+        window.addEventListener("DOMContentLoaded", () => slothApp.init());
+    </script>
 </body>
 </html>
