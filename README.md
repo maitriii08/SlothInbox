@@ -23,3 +23,16 @@ SlothInbox is an offline-first productivity tool built for the Hacktoberfest *Sl
 * **Application Engine:** Embedded Vanilla JavaScript (Reactive State Machine, HTML5 Drag-and-Drop API, LocalStorage persistence)
 * **AI & Heuristic Parser:** Client-side intent classification with zero external API calls
 * **Hosting:** GitHub Pages
+* ---
+
+## 📦 Live Demo
+
+Access the live web application:  
+👉 **[https://maitriii08.github.io/SlothInbox/](https://maitriii08.github.io/SlothInbox/)**
+
+---
+
+## 🏆 Hacktoberfest 2026 Submission
+
+Built for the **Hacktoberfest Open-Source AI Challenge Week 3: Slow and Steady**.
+* **Partner Categories:** Best Use of Gemma, Best Use of GitHub Copilot
