@@ -2,24 +2,24 @@
 
 > **Local-First, Privacy-Preserving Intelligent Digital Workspace & Clutter Tidier**
 
-SlothInbox is an offline-capable, client-side productivity system built for the Hacktoberfest *Slow and Steady* challenge. It automates the organization of messy digital clutter—unstructured notes, code bug reports, billing records, and calendar entries—into an actionable, categorized stream and Kanban workflow entirely on your local machine using client-side heuristics and Google's open-weight Gemma architecture via WebGPU.
+SlothInbox is an offline-first productivity tool built for the Hacktoberfest *Slow and Steady* challenge. It automates sorting, prioritizing, and cataloging digital clutter—rough task notes, bug traces, billing reminders, and meeting syncs—directly inside the browser with zero external server dependencies, running on client-side heuristic classification and Google's open-weight Gemma architecture principles via WebGPU.
 
 ---
 
 ## 🚀 Key Features
 
-* **Zero-Server Processing & 100% Data Privacy:** Built on client-side WebGPU architecture. Your confidential meeting notes, code snippets, and financial receipts never leave your browser or hit external third-party servers.
-* **Intelligent Clutter Ingestion:** Paste chaotic text dumps, upload Markdown/JSON files, or drop snippets directly into the composer. The local engine automatically classifies content into Code, Tasks, Finances, Events, or Notes.
-* **Interactive Kanban Workflow:** Switch between an organized feed, an interactive drag-and-drop Kanban board, and a raw buffer inspector.
-* **Subtle Monochrome Aesthetic:** A distraction-free design system featuring light and true OLED dark modes, 1px borders, and zero intrusive neon animations.
-* **Keyboard-First Navigation:** Press `Cmd + K` (or `Ctrl + K`) anytime to invoke the Command Palette and switch workspaces, load datasets, or export backups.
-* **Zero Infrastructure Overhead:** Deployed entirely as a static web client via GitHub Pages with no subscription costs, rate limits, or backend server bills.
+* **100% Client-Side Privacy:** No external database or remote inference server. Personal thoughts, confidential receipts, and uncommitted code snippets never leave your browser.
+* **Instant Clutter Ingestion:** Paste unstructured text dumps or rough task lists. The client-side parser automatically detects intent and categorizes them into Code, Tasks, Finances, Events, or Notes.
+* **Interactive Kanban Board:** Drag and drop items between workflow stages (Pending, In Progress, Scheduled, Completed) with automatic state persistence.
+* **Streamlined Single-File Architecture:** Self-contained reactive engine with embedded CSS design tokens, eliminating 404 script-loading errors, MIME-type mismatches, or broken asset paths.
+* **Monochrome Minimalist UI:** High-contrast light mode and true OLED dark mode built with clean 1px borders, subtle tags, and zero distracting neon glows.
+* **Offline Local Storage & JSON Export:** Automatically syncs with local storage and provides a one-click JSON database export for local backups.
 
 ---
 
-## 🛠️ Tech Stack & Modular Architecture
+## 🛠️ Tech Stack & Architecture
 
-* **Frontend:** Semantic HTML5, CSS3 Custom Properties (Design Tokens, Responsive Grid, OLED Dark Mode)
-* **Application Layer:** Modular Vanilla JavaScript (State Machine, Drag & Drop API, LocalStorage persistence)
-* **AI & Parser Engine:** Client-side heuristic intent extraction with Google Gemma 4 WebGPU execution sandbox
-* **Deployment:** GitHub Pages
+* **Frontend:** Semantic HTML5, CSS3 Custom Properties (CSS Design Tokens, Responsive Flexbox & Grid, OLED Dark Mode)
+* **Application Engine:** Embedded Vanilla JavaScript (Reactive State Machine, HTML5 Drag-and-Drop API, LocalStorage persistence)
+* **AI & Heuristic Parser:** Client-side intent classification with zero external API calls
+* **Hosting:** GitHub Pages
